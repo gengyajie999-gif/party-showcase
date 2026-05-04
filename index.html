@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>党建展示网页</title>
+  <style>
+    :root{
+      --red1:#8b0000; --red2:#c1121f; --red3:#d62828;
+      --gold:#d4a017; --blue:#1d4ed8; --orange:#ea580c; --green:#15803d; --red:#b91c1c;
+      --text:#1f2937; --muted:#6b7280; --line:#e5e7eb; --card:#fff;
+      --shadow:0 10px 24px rgba(0,0,0,.08); --radius:18px; --maxw:1180px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;font-family:"Microsoft YaHei","PingFang SC",Arial,sans-serif;color:var(--text);background:linear-gradient(180deg,#fff8f7 0%,#fff 28%,#fff 100%)}
+    a{text-decoration:none;color:inherit}
+    img{display:block;max-width:100%}
+    .hero{
+      min-height:68vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:40px 20px;color:#fff;
+      background:
+      radial-gradient(circle at 20% 20%, rgba(255,255,255,.12), transparent 28%),
+      radial-gradient(circle at 80% 10%, rgba(255,255,255,.08), transparent 24%),
+      linear-gradient(135deg, var(--red1), var(--red2) 56%, var(--red3));
+      position:relative;overflow:hidden
+    }
+    .hero::after{content:"";position:absolute;inset:auto -10% -120px -10%;height:220px;background:rgba(255,255,255,.08);transform:rotate(-3deg);filter:blur(10px)}
+    .hero-inner{max-width:920px;position:relative;z-index:1}
+    .eyebrow{letter-spacing:.28em;font-size:14px;opacity:.9;margin-bottom:18px}
+    h1{margin:0 0 16px;font-size:clamp(34px,6vw,68px);line-height:1.1}
+    .subtitle{margin:0 auto 14px;font-size:clamp(18px,2.2vw,28px);opacity:.95}
+    .slogan{margin-top:22px;display:inline-block;padding:12px 20px;border:1px solid rgba(255,255,255,.24);border-radius:999px;background:rgba(255,255,255,.08)}
+    .container{width:min(var(--maxw),calc(100% - 32px));margin:0 auto}
+    .section{padding:48px 0 18px}
+    .section-title{display:flex;align-items:center;gap:14px;margin-bottom:18px}
+    .section-title h2{margin:0;font-size:clamp(24px,3vw,34px)}
+    .line{flex:1;height:1px;background:linear-gradient(90deg,rgba(185,28,28,.4),rgba(185,28,28,0))}
+    .section-desc{margin:0 0 24px;color:var(--muted);line-height:1.8}
+    .notice{padding:14px 16px;background:#fff5f5;border:1px solid #fecaca;border-radius:14px;color:#7f1d1d;line-height:1.8;margin-bottom:20px}
+    .nav-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:16px}
+    .nav-card{position:relative;min-height:180px;border-radius:18px;overflow:hidden;box-shadow:var(--shadow);border:1px solid #f1f5f9;display:flex}
+    .nav-bg{position:absolute;inset:0;background-size:cover;background-position:center}
+    .nav-overlay{position:absolute;inset:0;background:linear-gradient(rgba(0,0,0,.20),rgba(0,0,0,.46))}
+    .nav-content{position:relative;z-index:1;padding:18px;color:#fff;display:flex;flex-direction:column;width:100%}
+    .nav-tag{width:50px;height:50px;border-radius:15px;display:inline-flex;align-items:center;justify-content:center;color:#fff;font-size:22px;font-weight:700}
+    .nav-card h3{margin:12px 0 8px;font-size:22px}
+    .nav-card p{margin:0;color:rgba(255,255,255,.92);line-height:1.7;font-size:14px}
+    .jump{margin-top:auto;font-weight:700}
+    .theme-card{background:#fff;border-radius:22px;box-shadow:var(--shadow);padding:22px;margin-bottom:22px;border:1px solid #f6e9e7}
+    .theme-header{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:16px}
+    .theme-title-wrap{display:flex;align-items:center;gap:14px}
+    .theme-badge{width:52px;height:52px;border-radius:16px;color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:24px;font-weight:800;flex-shrink:0}
+    .theme-header h3{margin:0 0 6px;font-size:28px}
+    .theme-header p{margin:0;color:var(--muted);line-height:1.8}
+    .photo-wall{columns:3 260px;column-gap:16px}
+    .photo-item{break-inside:avoid;margin-bottom:16px;background:#fff;border-radius:18px;overflow:hidden;border:1px solid #eef2f7;box-shadow:0 8px 18px rgba(0,0,0,.06);cursor:pointer;transition:.18s}
+    .photo-item:hover{transform:translateY(-2px);box-shadow:0 12px 22px rgba(0,0,0,.09)}
+    .photo-item img{width:100%;aspect-ratio:4/3;object-fit:cover;background:#f8fafc}
+    .photo-meta{padding:12px 14px 14px}
+    .photo-title{font-size:16px;font-weight:700;margin-bottom:6px;line-height:1.5}
+    .photo-sub{color:var(--muted);font-size:13px;line-height:1.6}
+    .video-box{margin-top:18px;background:#f8fafc;border:1px solid #e2e8f0;border-radius:18px;padding:16px}
+    .video-box h4{margin:0 0 12px}
+    .video-box p{margin:0 0 12px;color:var(--muted);line-height:1.7}
+    .video-poster-wrap{position:relative;border-radius:12px;overflow:hidden;cursor:pointer}
+    .video-poster-wrap img{width:100%;display:block;aspect-ratio:16/9;object-fit:cover}
+    .video-play-btn{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:linear-gradient(rgba(0,0,0,.18),rgba(0,0,0,.28));color:#fff;font-size:18px;font-weight:700}
+    .video-box video{width:100%;border-radius:12px;background:#000}
+    .posts-wrap{display:grid;gap:14px}
+    .post-card{background:#fff;border:1px solid #eef2f7;border-radius:16px;padding:18px;box-shadow:0 8px 16px rgba(0,0,0,.05);display:grid;grid-template-columns:120px 1fr auto;gap:16px;align-items:center}
+    .post-date{color:var(--muted);font-weight:700}
+    .post-main h4{margin:0 0 8px;color:var(--blue);font-size:18px}
+    .post-main p{margin:0;color:var(--muted);line-height:1.7;font-size:14px}
+    .post-link{color:var(--red2);font-weight:700;white-space:nowrap}
+    .footer{margin-top:40px;padding:28px 0 46px;color:var(--muted);border-top:1px solid var(--line);text-align:center;line-height:1.9}
+    .modal{position:fixed;inset:0;background:rgba(0,0,0,.56);display:none;align-items:center;justify-content:center;padding:20px;z-index:999}
+    .modal.show{display:flex}
+    .modal-card{width:min(960px,100%);max-height:92vh;overflow:auto;background:#fff;border-radius:24px;box-shadow:0 24px 60px rgba(0,0,0,.24);position:relative}
+    .close-btn{position:sticky;top:14px;margin-left:auto;margin-right:14px;width:42px;height:42px;border:0;border-radius:50%;background:rgba(255,255,255,.95);box-shadow:0 6px 18px rgba(0,0,0,.15);cursor:pointer;font-size:22px;z-index:10}
+    .modal-body{padding:0 22px 26px}
+    .modal-image{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:18px;background:#f8fafc;margin-top:-10px}
+    .meta-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px 18px;margin:18px 0 8px}
+    .meta-item{background:#fafafa;border:1px solid #f0f0f0;border-radius:14px;padding:12px 14px}
+    .meta-item .label{color:var(--muted);font-size:13px;margin-bottom:6px}
+    .meta-item .value{font-size:15px;line-height:1.7}
+    .voice-box,.text-box,.link-box,.audio-box{margin-top:14px;border-radius:16px;padding:16px 18px}
+    .voice-box{background:linear-gradient(135deg,#fff7ed,#fff);border:1px solid #ffedd5;line-height:1.85}
+    .text-box{background:#fff;border:1px solid #eef2f7;line-height:1.85}
+    .link-box{background:#f8fafc;border:1px dashed #cbd5e1}
+    .audio-box{background:#fff7f7;border:1px solid #fecaca}
+    .voice-box h5,.text-box h5,.link-box h5,.audio-box h5{margin:0 0 10px;font-size:16px}
+    .link-box a{color:var(--blue);font-weight:700}
+    .audio-box audio{width:100%;margin-top:8px}
+    .hint{font-size:13px;color:var(--muted);line-height:1.7}
+    @media (max-width:980px){.nav-grid{grid-template-columns:repeat(2,1fr)}.post-card{grid-template-columns:1fr}.meta-grid{grid-template-columns:1fr}}
+    @media (max-width:640px){.hero{min-height:58vh}.nav-grid{grid-template-columns:1fr}.theme-card{padding:18px}.theme-header{flex-direction:column}.photo-wall{columns:1}.modal-body{padding:0 14px 18px}}
+  </style>
+</head>
+<body>
+  <header class="hero" id="top">
+    <div class="hero-inner">
+      <div class="eyebrow">WATER · PARTY · YOUTH</div>
+      <h1>江河之上·党旗之下</h1>
+      <p class="subtitle">水利工程专业研究生第六党支部风采展</p>
+      <div class="slogan"></div>
+    </div>
+  </header>
+
+  <main>
+    <section class="section">
+      <div class="container">
+        <div class="section-title"><h2>五大主题板块</h2><div class="line"></div></div>
+        <div class="nav-grid" id="navGrid"></div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container" id="themeContainer"></div>
+    </section>
+
+    <section class="section" id="posts">
+      <div class="container">
+        <div class="section-title"><h2>支部之声 · 往期推文</h2><div class="line"></div></div>
+        <p class="section-desc">点击标题即可跳转阅读。推文按发布时间倒序排列，便于集中查阅支部往期宣传成果。</p>
+        <div class="posts-wrap" id="postList"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div>水利工程专业研究生第六党支部</div>
+      <div>土木与水利工程学院</div>
+      <div><a href="#top" style="color:#b91c1c;font-weight:700;">返回顶部</a></div>
+    </div>
+  </footer>
+
+  <div class="modal" id="modal">
+    <div class="modal-card">
+      <button class="close-btn" id="closeBtn" aria-label="关闭">×</button>
+      <div class="modal-body" id="modalBody"></div>
+    </div>
+  </div>
+
+  <audio id="themeAudio" preload="none"></audio>
+
+  <script>
+    const themeConfig = [
+      {
+        id: 'zhu',
+        name: '铸魂 · 思想领航',
+        short: '铸魂',
+        color: '#d4a017',
+        icon: '铸',
+        navBg: 'images/zhu/zhu_1.jpg',
+        desc: '',
+        audio: 'audio/zhu/zhu1.mp3',
+        video: {
+          title: '',
+          descFile: 'data/zhu/video.txt',
+          desc: '',
+          src: 'videos/zhu/zhu1.mp4',
+          poster: 'images/zhu/zhu_1.jpg'
+        },
+        photos: [
+          { title:'2026年4月主题党日', sub:'主题党日 · 理论学习', thumb:'images/zhu/zhu_1.jpg', full:'images/zhu/zhu_1.jpg', time:'2026年4月23日', location:'西六楼五楼报告厅（516）',  intro:'本次二十届四中全会精神专题宣讲活动，邀请华中科技大学研究生红色理论学讲团讲师进行专题授课，面向支部全体党员及学院研究生代表开展。宣讲围绕二十届四中全会的核心要义与战略部署，结合理论分析与实践案例，系统解读全会提出的新思想、新论断、新要求。活动现场学习氛围浓厚，党员们认真聆听、积极交流，进一步深化了对全会精神的理解，增强了在新时代新征程上勇担使命、砥砺前行的思想自觉与行动自觉。', voice:'通过这次宣讲，我对二十届四中全会精神有了更深刻的理解，也更加坚定了将理论学习转化为实际行动的决心。——彭颖', link:'https://zzb.hust.edu.cn/info/1740/6262.htm' },
+          { title:'铸魂模块图片2', sub:'读书分享 · 交流研讨', thumb:'images/zhu/zhu_2.jpg', full:'images/zhu/zhu_2.jpg', time:'待填写', location:'待填写', introFile:'data/zhu/2.txt', intro:'这里是第2张图片的活动简介占位内容。', voice:'请在此替换为对应党员心声。', link:'' },
+          { title:'铸魂模块图片3', sub:'微党课 · 思想引领', thumb:'images/zhu/zhu_3.jpg', full:'images/zhu/zhu_3.jpg', time:'待填写', location:'待填写', introFile:'data/zhu/3.txt', intro:'这里是第3张图片的活动简介占位内容。', voice:'请在此替换为对应党员心声。', link:'' },
+          { title:'铸魂模块图片4', sub:'专题学习 · 支部活动', thumb:'images/zhu/zhu_4.jpg', full:'images/zhu/zhu_4.jpg', time:'待填写', location:'待填写', introFile:'data/zhu/4.txt', intro:'这里是第4张图片的活动简介占位内容。', voice:'请在此替换为对应党员心声。', link:'' },
+          { title:'铸魂模块图片5', sub:'理论研讨 · 集体学习', thumb:'images/zhu/zhu_5.jpg', full:'images/zhu/zhu_5.jpg', time:'待填写', location:'待填写', introFile:'data/zhu/5.txt', intro:'这里是第5张图片的活动简介占位内容。', voice:'请在此替换为对应党员心声。', link:'' },
+          { title:'铸魂模块图片6', sub:'党史学习 · 感悟初心', thumb:'images/zhu/zhu_6.jpg', full:'images/zhu/zhu_6.jpg', time:'待填写', location:'待填写', introFile:'data/zhu/6.txt', intro:'这里是第6张图片的活动简介占位内容。', voice:'请在此替换为对应党员心声。', link:'' },
+          { title:'铸魂模块图片7', sub:'学习分享 · 交流提升', thumb:'images/zhu/zhu_7.jpg', full:'images/zhu/zhu_7.jpg', time:'待填写', location:'待填写', introFile:'data/zhu/7.txt', intro:'这里是第7张图片的活动简介占位内容。', voice:'请在此替换为对应党员心声。', link:'' },
+          { title:'铸魂模块图片8', sub:'主题教育 · 学思践悟', thumb:'images/zhu/zhu_8.jpg', full:'images/zhu/zhu_8.jpg', time:'待填写', location:'待填写', introFile:'data/zhu/8.txt', intro:'这里是第8张图片的活动简介占位内容。', voice:'请在此替换为对应党员心声。', link:'' },
+          { title:'铸魂模块图片9', sub:'支部学习 · 思想建设', thumb:'images/zhu/zhu_9.jpg', full:'images/zhu/zhu_9.jpg', time:'待填写', location:'待填写', introFile:'data/zhu/9.txt', intro:'这里是第9张图片的活动简介占位内容。', voice:'请在此替换为对应党员心声。', link:'' }
+        ]
+      },
+      {
+        id: 'li',
+        name: '砺剑 · 科研报国',
+        short: '砺剑',
+        color: '#2563eb',
+        icon: '砺',
+        navBg: 'images/li/li_nav.webp',
+        desc: '聚焦实验室科研、项目调研、成果汇报与学术讨论，展示把论文写在祖国大地上的专业担当。',
+        audio: 'audio/li/mokuai2.mp3',
+        video: {
+          title: '研究生反诈安全教育主题党日活动视频',
+          desc: '',
+          src: 'videos/li/li_demo.mp4',
+          poster: 'images/li/li_video_poster.webp'
+        },
+        photos: [
+          { title:'活动现场照片一', sub:'主题党日 · 汇报展示', thumb:'images/li/li_1_thumb.webp', full:'images/li/li_1_full.webp', time:'2026年4月29日', location:'学院报告厅', introFile:'data/li/li_1_intro.txt', intro:'本次反诈安全教育主题党日活动面向学院全体研究生开展，通过现场分享、案例解析等形式，为同学们讲解了刷单返利、虚假投资理财、冒充客服等高发诈骗类型的识别与防范方法。活动现场氛围热烈，同学们参与度高，有效帮助大家深化了对反诈知识的理解，进一步提升了安全防范意识与自我保护能力。', voice:'通过这种主题党日形式，大家对反诈知识有了更直观的认识，也增强了安全防范意识。', link:'' },
+          { title:'活动现场照片二', sub:'会场全景 · 互动交流', thumb:'images/li/li_2_thumb.webp', full:'images/li/li_2_full.webp', time:'2026年4月29日', location:'学院报告厅', intro:'本张图片用于展示活动现场整体布置和互动交流情况，验证本地图片在板块图片墙中的加载效果。', voice:'图片墙使用缩略图加载，点开后再查看大图，可以兼顾展示效果和访问速度。', link:'' },
+          { title:'活动现场照片三', sub:'情景展示 · 支部活动', thumb:'images/li/li_3_thumb.webp', full:'images/li/li_3_full.webp', time:'2026年4月29日', location:'学院报告厅', intro:'第三张本地图片已同步接入图片墙和弹窗详情，用于测试多张本地素材在同一板块中的组织方式。', voice:'后续继续沿用这种路径组织方式，就可以逐步扩展成完整正式版。', link:'' }
+        ]
+      },
+      {
+        id: 'nuan',
+        name: '暖心 · 服务为民',
+        short: '暖心',
+        color: '#ea580c',
+        icon: '暖',
+        desc: '聚焦志愿服务、社区实践和校园关怀，记录党员走出实验室、服务群众的真实足迹。',
+        photos: [
+          { title:'社区志愿服务', sub:'志愿实践 · 服务群众', time:'2026年3月', location:'关山社区', intro:'支部成员走进社区开展志愿服务，以实际行动践行为民服务宗旨。', voice:'服务群众不是一句口号，而是一次次具体而微的行动。——支部党员 刘同学', link:'https://mp.weixin.qq.com/' },
+          { title:'校园志愿活动', sub:'服务同学 · 温暖校园', time:'2025年9月', location:'校园主干道', intro:'参与迎新、义务劳动和环境维护等活动，服务校园、服务同学。', voice:'在平凡的小事中也能体现责任与奉献。——支部党员 黄同学', link:'' }
+        ]
+      },
+      {
+        id: 'ju',
+        name: '聚力 · 支部同行',
+        short: '聚力',
+        color: '#15803d',
+        icon: '聚',
+        desc: '聚焦支部组织生活、团建联谊和集体活动，呈现支部的凝聚力与向心力。',
+        photos: [
+          { title:'联合主题党日', sub:'联合共建 · 支部交流', time:'2026年1月22日', location:'联合党支部活动室', intro:'与兄弟支部联合开展主题党日活动，促进支部之间交流学习。', voice:'在交流中互学互鉴，也更能感受到支部建设的活力。——支部党员 吴同学', link:'https://mp.weixin.qq.com/' },
+          { title:'支部团建活动', sub:'团建素拓 · 集体成长', time:'2025年秋季', location:'校园体育场', intro:'通过团建和体育活动增强支部成员之间的沟通协作。', voice:'支部不仅是组织，也是一个温暖、互助、有力量的集体。——支部党员 何同学', link:'' }
+        ]
+      },
+      {
+        id: 'chuan',
+        name: '传承 · 红色基因',
+        short: '传承',
+        color: '#b91c1c',
+        icon: '传',
+        desc: '聚焦入党宣誓、红色教育基地参观和革命传统教育，传承红色血脉、赓续精神力量。',
+        photos: [
+          { title:'党旗领航教育基地参观', sub:'基地学习 · 红色教育', time:'2026年3月21日', location:'华中科技大学党旗领航教育基地', intro:'通过实地参观学习，重温党的光辉历程，坚定理想信念。', voice:'在沉浸式学习中，我更加感受到信仰的力量和党员身份的责任。——支部党员 郭同学', link:'https://mp.weixin.qq.com/' },
+          { title:'入党宣誓仪式', sub:'初心使命 · 庄严承诺', time:'2025年7月', location:'红色教育基地', intro:'面对党旗庄严宣誓，进一步强化党员意识和使命意识。', voice:'誓言不仅要说出来，更要落实到今后的学习、科研和生活中。——支部党员 林同学', link:'' }
+        ]
+      }
+    ];
+
+    const posts = [
+      { title:'深学细悟政绩观 知行合一勇担当', date:'2026/04', intro:'围绕理论学习和责任担当开展专题交流，展现支部成员在学思践悟中的成长。', url:'https://mp.weixin.qq.com/' },
+      { title:'学雷锋 践初心 勇担当', date:'2026/03', intro:'记录支部成员参与志愿服务和雷锋月实践活动的真实场景与感悟。', url:'https://mp.weixin.qq.com/' }
+    ];
+
+    function makePlaceholder(title, color) {
+      const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="900" viewBox="0 0 1200 900"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="${color}" /><stop offset="100%" stop-color="#ffffff" stop-opacity="0.9" /></linearGradient></defs><rect width="1200" height="900" fill="url(#g)" /><circle cx="180" cy="160" r="90" fill="rgba(255,255,255,0.16)" /><circle cx="1040" cy="220" r="120" fill="rgba(255,255,255,0.12)" /><circle cx="980" cy="740" r="140" fill="rgba(255,255,255,0.10)" /><text x="80" y="760" font-size="72" font-family="Microsoft YaHei, Arial" fill="#ffffff" font-weight="700">${title}</text><text x="82" y="824" font-size="30" font-family="Microsoft YaHei, Arial" fill="#ffffff" opacity="0.9">轻量占位图</text></svg>`;
+      return 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(svg);
+    }
+
+    async function resolveTextFile(path, fallback) {
+      if (!path) return fallback || '';
+      try {
+        const res = await fetch(path, { cache: 'force-cache' });
+        if (res.ok) return await res.text();
+      } catch (e) {}
+      return fallback || '';
+    }
+
+    const navGrid = document.getElementById('navGrid');
+    const themeContainer = document.getElementById('themeContainer');
+    const postList = document.getElementById('postList');
+    const modal = document.getElementById('modal');
+    const modalBody = document.getElementById('modalBody');
+    const closeBtn = document.getElementById('closeBtn');
+    const themeAudio = document.getElementById('themeAudio');
+
+    themeConfig.forEach(theme => {
+      const nav = document.createElement('a');
+      nav.className = 'nav-card';
+      nav.href = `#${theme.id}`;
+
+      const navBg = theme.navBg
+        ? `<div class="nav-bg" style="background-image:url('${theme.navBg}')"></div><div class="nav-overlay"></div>`
+        : `<div class="nav-bg" style="background:linear-gradient(135deg, ${theme.color}, #ffffff)"></div><div class="nav-overlay" style="background:linear-gradient(rgba(0,0,0,.12),rgba(0,0,0,.30))"></div>`;
+
+      nav.innerHTML = `
+        ${navBg}
+        <div class="nav-content">
+          <span class="nav-tag" style="background:${theme.color}">${theme.icon}</span>
+          <h3>${theme.short}</h3>
+          <p>${theme.desc}</p>
+          <div class="jump">点击查看 →</div>
+        </div>`;
+      navGrid.appendChild(nav);
+
+      const section = document.createElement('section');
+      section.className = 'theme-card';
+      section.id = theme.id;
+      section.innerHTML = `
+        <div class="theme-header">
+          <div class="theme-title-wrap">
+            <span class="theme-badge" style="background:${theme.color}">${theme.icon}</span>
+            <div>
+              <h3>${theme.name}</h3>
+              <p>${theme.desc}</p>
+            </div>
+          </div>
+        </div>
+        <div class="photo-wall"></div>
+        ${theme.video ? `
+          <div class="video-box" id="video-box-${theme.id}">
+            <h4>视频展示区：${theme.video.title}</h4>
+            <p class="video-desc">加载中...</p>
+            <div class="video-poster-wrap" data-video-src="${theme.video.src}" data-video-poster="${theme.video.poster}">
+              <img src="${theme.video.poster}" alt="视频封面" loading="lazy">
+              <div class="video-play-btn">点击加载并播放视频</div>
+            </div>
+          </div>` : ''}`;
+
+      const wall = section.querySelector('.photo-wall');
+
+      theme.photos.forEach(photo => {
+        const item = document.createElement('article');
+        item.className = 'photo-item';
+        const imgSrc = photo.thumb ? photo.thumb : makePlaceholder(photo.title, theme.color);
+        item.innerHTML = `
+          <img src="${imgSrc}" loading="lazy" alt="${photo.title}">
+          <div class="photo-meta">
+            <div class="photo-title">${photo.title}</div>
+            <div class="photo-sub">${photo.sub}</div>
+          </div>`;
+        const imgEl = item.querySelector('img');
+        imgEl.addEventListener('error', () => { imgEl.src = makePlaceholder(photo.title, theme.color); }, { once: true });
+        item.addEventListener('click', () => openModal(theme, photo));
+        wall.appendChild(item);
+      });
+
+      if (theme.video && theme.video.descFile) {
+        setTimeout(async () => {
+          const box = document.querySelector(`#video-box-${theme.id} .video-desc`);
+          if (box) box.textContent = await resolveTextFile(theme.video.descFile, theme.video.desc || '');
+        }, 0);
+      }
+
+      themeContainer.appendChild(section);
+    });
+
+    document.querySelectorAll('.video-poster-wrap').forEach(box => {
+      box.addEventListener('click', () => {
+        const src = box.dataset.videoSrc;
+        const poster = box.dataset.videoPoster;
+        box.outerHTML = `
+          <video controls preload="metadata" poster="${poster}">
+            <source src="${src}" type="video/mp4">
+            您的浏览器不支持视频播放。
+          </video>`;
+      }, { once: true });
+    });
+
+    posts.forEach(post => {
+      const card = document.createElement('div');
+      card.className = 'post-card';
+      card.innerHTML = `
+        <div class="post-date">${post.date}</div>
+        <div class="post-main">
+          <h4><a href="${post.url}" target="_blank" rel="noopener noreferrer">${post.title}</a></h4>
+          <p>${post.intro}</p>
+        </div>
+        <a class="post-link" href="${post.url}" target="_blank" rel="noopener noreferrer">阅读全文 →</a>`;
+      postList.appendChild(card);
+    });
+
+    function playThemeAudio(audioSrc) {
+      return;
+    }
+
+    function stopModalMedia() {
+      modalBody.querySelectorAll('audio, video').forEach(media => {
+        try {
+          media.pause();
+          media.currentTime = 0;
+          media.removeAttribute('src');
+          media.querySelectorAll('source').forEach(source => source.removeAttribute('src'));
+          media.load();
+        } catch (e) {}
+      });
+    }
+
+    async function openModal(theme, photo) {
+      stopModalMedia();
+      const linkHtml = photo.link
+        ? `<a href="${photo.link}" target="_blank" rel="noopener noreferrer">点击阅读完整推文</a>`
+        : '暂无相关推文';
+      const imgSrc = photo.full ? photo.full : makePlaceholder(photo.title, theme.color);
+      const introText = await resolveTextFile(photo.introFile, photo.intro || '');
+
+      modalBody.innerHTML = `
+        <img class="modal-image" src="${imgSrc}" alt="${photo.title}" onerror="this.src='${makePlaceholder(photo.title, theme.color)}'">
+        <div class="meta-grid">
+          <div class="meta-item"><div class="label">活动时间</div><div class="value">${photo.time}</div></div>
+          <div class="meta-item"><div class="label">活动地点</div><div class="value">${photo.location}</div></div>
+        </div>
+        <div class="text-box">
+          <h5>活动简介</h5>
+          <div>${introText}</div>
+
+        </div>
+        <div class="voice-box">
+          <h5>党员心声</h5>
+          <div>${photo.voice}</div>
+        </div>
+        <div class="audio-box">
+          <h5>板块背景音乐</h5>
+          <audio controls preload="none" autoplay>
+            <source src="${theme.audio}" type="audio/mpeg">
+            您的浏览器不支持音频播放。
+          </audio>
+        </div>
+        <div class="link-box">
+          <h5>相关推文</h5>
+          <div>${linkHtml}</div>
+        </div>`;
+
+      modal.classList.add('show');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      stopModalMedia();
+      themeAudio.pause();
+      themeAudio.currentTime = 0;
+      themeAudio.removeAttribute('src');
+      themeAudio.load();
+      modal.classList.remove('show');
+      document.body.style.overflow = '';
+      modalBody.innerHTML = '';
+    }
+
+    closeBtn.addEventListener('click', closeModal);
+    modal.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+  </script>
+</body>
+</html>
